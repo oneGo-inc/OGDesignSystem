@@ -12,11 +12,11 @@ public class OGCacheImageViewModel {
     private var imageService: OGImageService
 
     public var onSetImage = PassthroughSubject<UIImage?, Never>()
-    public var setUrl: CurrentValueSubject<URL, Never>
+    public var setUrl: CurrentValueSubject<URL?, Never>
 
     private var cancellableSet = Set<AnyCancellable>()
 
-    public init(setUrl: CurrentValueSubject<URL, Never>,
+    public init(setUrl: CurrentValueSubject<URL?, Never>,
                 imageService: OGImageService) {
         self.setUrl = setUrl
         self.imageService = imageService
@@ -27,6 +27,7 @@ private extension OGCacheImageViewModel {
     func bind() {
         setUrl
             .sink { [weak self] url in
+                guard let url else { return }
                 self?.getImage(url: url)
             }
             .store(in: &cancellableSet)

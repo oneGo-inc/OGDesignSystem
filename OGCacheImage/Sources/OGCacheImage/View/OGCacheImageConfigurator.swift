@@ -10,7 +10,7 @@ import Foundation
 public class OGCacheImageConfigurator {
     public init() { }
 
-    public func build(setUrl: CurrentValueSubject<URL, Never>,
+    public func build(setUrl: CurrentValueSubject<URL?, Never>,
                       imageService: OGImageService? = nil,
                       imageCacheService: OGImageCashService? = nil) -> OGCacheImage {
         let cacheService = imageCacheService ?? DefaultCashService()
